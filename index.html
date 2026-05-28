@@ -272,87 +272,78 @@
   <div class="stars"></div>
 
   <header>
-    <h1> BONUS EXTENSION METHODS</h1>
+    <h1>LATIHAN </h1>
     <p>Uliya Gumpari | 251410008 | Kelas: SI2A</p>
   </header>
 
   <div class="container">
 
 <section>
-  <h2>Soal 1 – Konflik Nama Antar Extension</h2>
+  <h2>RINGKASAN</h2>
 
   <p>
-    Pada kode tersebut terjadi konflik karena terdapat dua
-    extension dengan nama method yang sama yaitu toInt()
-    pada tipe data String.
+    Redirecting constructor adalah constructor
+    yang digunakan untuk memanggil constructor lain
+    di dalam class yang sama menggunakan
+    <b>: this(...)</b>.
   </p>
 
   <p>
-    Walaupun tipe return berbeda, Dart tetap menganggap
-    pemanggilan method tersebut ambigu sehingga program
-    tidak dapat dikompilasi.
+    Constructor ini biasanya dipakai supaya
+    penulisan kode tidak berulang
+    dan lebih rapi.
   </p>
 
   <p>
-    Solusi yang dapat dilakukan yaitu mengganti nama method
-    atau menggunakan extension override agar kedua extension
-    tetap dapat digunakan tanpa konflik.
+    Dengan redirecting constructor,
+    object bisa dibuat dengan beberapa cara berbeda
+    tetapi tetap mengarah ke constructor utama.
   </p>
 
-  <div class="code-container">
-    <div class="code-header">DART SOURCE CODE</div>
-<pre><code>// Nama  : Uliya Gumpari
-// NIM   : 251410008
-// Kelas : SI2A
+  <p>
+    Pada program Circle ini,
+    object dapat dibuat dari radius,
+    diameter, keliling, dan luas lingkaran.
+  </p>
 
-extension StringNumber on String {
+  <p>
+    Redirecting constructor tidak memiliki body,
+    sehingga tidak cocok digunakan
+    untuk logic yang terlalu kompleks.
+  </p>
 
-  int convertToInt() {
-
-    return int.parse(this);
-  }
-}
-
-extension StringDouble on String {
-
-  double convertToDouble() {
-
-    return double.parse(this);
-  }
-}
-
-void main() {
-
-  String angka = '123';
-
-  print(angka.convertToInt());
-
-  print(angka.convertToDouble());
-}
-</code></pre>
-  </div>
-
-  <button onclick="openModal('https://dartpad.dev/?id=0e3b5c71e38f44a6efb0ae2daa119f92&run=true')">Run Program</button>
    </section>
     
 <section>
-  <h2>Soal 2 – Extension Method dan Member Private</h2>
+  <h2>Latihan Circle Class</h2>
 
   <p>
-    Kode gagal dikompilasi karena extension tidak dapat
-    mengakses member private yang ditandai dengan simbol
-    underscore (_).
+    Pada latihan ini aku membuat class Circle
+    menggunakan redirecting constructor.
   </p>
 
   <p>
-    Member private hanya bisa digunakan di dalam class
-    yang sama sehingga extension di luar class tidak
-    memiliki akses langsung ke _value.
+    Constructor utama menerima nilai radius
+    sebagai dasar pembuatan object lingkaran.
   </p>
 
   <p>
-    Cara memperbaikinya yaitu dengan menambahkan getter
-    publik pada class tanpa mengubah _value menjadi public.
+    Selain constructor utama,
+    aku juga membuat beberapa redirecting constructor
+    seperti fromDiameter, fromCircumference,
+    dan fromArea.
+  </p>
+
+  <p>
+    Semua constructor tersebut tetap mengarah
+    ke constructor utama menggunakan
+    <b>: this(...)</b>.
+  </p>
+
+  <p>
+    Menurutku cara ini membuat kode lebih singkat,
+    lebih rapi, dan tidak perlu menulis ulang
+    proses inisialisasi object.
   </p>
 
   <div class="code-container">
@@ -361,44 +352,73 @@ void main() {
 // NIM   : 251410008
 // Kelas : SI2A
 
-class Counter {
+import 'dart:math';
 
-  int _value = 0;
+class Circle {
 
-  void increment() {
+  final double radius;
 
-    _value++;
+  // constructor utama
+  Circle(this.radius);
+
+  // redirecting constructor dari diameter
+  Circle.fromDiameter(double diameter)
+      : this(diameter / 2);
+
+  // redirecting constructor dari keliling
+  Circle.fromKeliling(double keliling)
+      : this(keliling / (2 * pi));
+
+  // redirecting constructor dari luas
+  Circle.fromLuas(double luas)
+      : this(sqrt(luas / pi));
+
+  double get hitungLuas {
+    return pi * radius * radius;
   }
 
-  int get value {
-
-    return _value;
+  double get hitungKeliling {
+    return 2 * pi * radius;
   }
-}
 
-extension CounterStats on Counter {
+  void tampilInfo() {
 
-  int getValue() {
+    print('Radius Lingkaran : ${radius.toStringAsFixed(2)}');
 
-    return value;
+    print('Luas Lingkaran   : ${hitungLuas.toStringAsFixed(2)}');
+
+    print('Keliling         : ${hitungKeliling.toStringAsFixed(2)}');
+
+    print('--------------------------------');
   }
 }
 
 void main() {
 
-  var counter = Counter();
+  var dataRadius = Circle(7);
 
-  counter.increment();
+  var dataDiameter = Circle.fromDiameter(14);
 
-  print(counter.getValue());
+  var dataKeliling = Circle.fromKeliling(44);
+
+  var dataLuas = Circle.fromLuas(154);
+
+  print('Lingkaran dari Radius');
+  dataRadius.tampilInfo();
+
+  print('Lingkaran dari Diameter');
+  dataDiameter.tampilInfo();
+
+  print('Lingkaran dari Keliling');
+  dataKeliling.tampilInfo();
+
+  print('Lingkaran dari Luas');
+  dataLuas.tampilInfo();
 }
-</code></pre>
-  </div>
 
-  <button onclick="openModal('https://dartpad.dev/?id=6805aeb6c42cdb39872b3951ae16fc34&run=true')">Run Program</button>
+  <button onclick="openModal('https://dartpad.dev/?id=46afcfb6b04ffd77350974b9aa542ecf&run=true')">Run Program</button>
 </section>
-
-    
+  
     
   </div>
 
